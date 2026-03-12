@@ -1,212 +1,129 @@
-# Geeker-Admin
+# 公安智能监控平台 (Police Intelligent Monitoring Platform)
 
-### 介绍 📖
+## 一、项目定位
 
-Geeker-Admin 一款基于 Vue3.4、TypeScript、Vite5、Pinia、Element-Plus 开源的后台管理框架，使用目前最新技术栈开发。项目提供强大的 [ProTable](https://juejin.cn/post/7166068828202336263) 组件，在一定程度上提高您的开发效率。另外本项目还封装了一些常用组件、Hooks、指令、动态路由、按钮级别权限控制等功能。
+基于 **Geeker-Admin**（Vue 3 + TypeScript + Vite 5 + Element Plus）构建的**政企安防监控后台管理系统**，核心能力覆盖：实时视频监控、多场景告警闭环、工作流编排。
 
-### React 版本 🔥
+---
 
-- 有需要请加底部微信了解、购买
+## 二、技术栈
 
-- Link：https://pro.spicyboy.cn
+| 层级       | 技术选型                          | 备注                               |
+| ---------- | --------------------------------- | ---------------------------------- |
+| 框架       | Vue 3.4 + TypeScript              | Composition API + `<script setup>` |
+| 构建       | Vite 5                            | 已配置 gzip/brotli                 |
+| UI 库      | Element Plus                      | 政企项目标配                       |
+| 状态管理   | Pinia + 持久化插件                | 替代 Vuex                          |
+| 路由       | Vue Router 4                      | 动态路由 + 按钮级权限              |
+| HTTP       | Axios 二次封装                    | 请求拦截/取消/Token 注入           |
+| 图表       | ECharts                           | M3 统计分析用                      |
+| 视频播放器 | **待定**（Jessibuca / mpegts.js） | ⚠️ 需后端确认推流协议              |
 
-### 在线预览 👀
+---
 
-- Link：https://admin.spicyboy.cn
+## 三、里程碑规划
 
-### 代码仓库 ⭐
+### M1（第 1-4 周）：系统基础 + 视频展示
 
-- Gitee：https://gitee.com/HalseySpicy/Geeker-Admin
-- GitHub：https://github.com/HalseySpicy/Geeker-Admin
+| 验收项                        | 状态          | 说明                       |
+| ----------------------------- | ------------- | -------------------------- |
+| 登录/退出/会话管理            | ✅ 框架自带   | Geeker-Admin 已完成        |
+| 角色权限控制（管理员/值班员） | ✅ 框架自带   | 动态路由 + 按钮权限        |
+| 菜单/路由/页面框架            | ✅ 已清洗完毕 | 仅保留 home + system       |
+| 点位列表展示与筛选            | 🔲 待开发     | `views/point/`             |
+| 点位在线/离线实时刷新         | 🔲 待开发     | 需后端接口                 |
+| 单路实时视频播放              | 🔲 待开发     | `views/monitor/`           |
+| 多宫格视频（4/9/16）          | 🔲 待开发     | ⚠️ 核心难点                |
+| 视频切换/全屏/静音            | 🔲 待开发     | 播放器组件封装             |
+| 时间轴回放历史视频            | 🔲 待开发     | 需后端提供录像时间片段列表 |
 
-### 项目文档 📚
+### M2（第 5-8 周）：场景管理 + 告警闭环
 
-- 项目更新日志：[CHANGELOG.md](./CHANGELOG.md)
+| 验收项                | 说明                                      |
+| --------------------- | ----------------------------------------- |
+| 13 个监控场景统一管理 | 启用/停用、绑定点位、参数配置             |
+| 实时告警接入          | **SSE（Server-Sent Events）** 单向推送    |
+| 告警列表筛选          | 按时间/场景/点位/级别                     |
+| 告警详情 + 证据       | 关联视频片段 + 关键帧截图（后端生成 URL） |
+| 告警处置闭环          | 确认/误报/备注，状态流转可追溯            |
 
-- 项目文档地址：https://docs.spicyboy.cn
+### M3（第 9-12 周）：工作流编排 + 平台扩展
 
-### 项目功能 🔨
+| 验收项                         | 说明                                                  |
+| ------------------------------ | ----------------------------------------------------- |
+| 工作流编排                     | ⚠️ 需产品明确原型（表单配置 or 拖拽画布）             |
+| 动态新增场景（无需改前端代码） | 需引入动态表单引擎（form-create / formily）           |
+| 系统稳定性与性能               | 高并发告警 + 多路视频                                 |
+| 操作日志 / 审计 / 统计         | ECharts 可视化                                        |
+| 🧠 公安智库 AI 助手（附加项）  | 预留悬浮窗入口，基于 RAGFlow 定制版按需以 iframe 接入 |
 
-- 使用 Vue3.4 + TypeScript 开发，单文件组件**＜script setup＞**
-- 采用 Vite5 作为项目开发、打包工具（配置 gzip/brotli 打包、tsx 语法、跨域代理…）
-- 使用 Pinia 替代 Vuex，轻量、简单、易用，集成 Pinia 持久化插件
-- 使用 TypeScript 对 Axios 整个二次封装（请求拦截、取消、常用请求封装…）
-- 基于 Element 二次封装 [ProTable](https://juejin.cn/post/7166068828202336263) 组件，表格页面全部为配置项 Columns
-- 支持 Element 组件大小切换、多主题布局、暗黑模式、i18n 国际化
-- 使用 VueRouter 配置动态路由权限拦截、路由懒加载，支持页面按钮权限控制
-- 使用 KeepAlive 对页面进行缓存，支持多级嵌套路由缓存
-- 常用自定义指令开发（权限、复制、水印、拖拽、节流、防抖、长按…）
-- 使用 Prettier 统一格式化代码，集成 ESLint、Stylelint 代码校验规范
-- 使用 husky、lint-staged、commitlint、czg、cz-git 规范提交信息
+---
 
-### 安装使用步骤 📔
+## 四、⚠️ 核心技术风险
 
-- **Clone：**
+### 1. 视频流协议（阻塞 M1）
 
-```text
-# Gitee
-git clone https://gitee.com/HalseySpicy/Geeker-Admin.git
-# GitHub
-git clone https://github.com/HalseySpicy/Geeker-Admin.git
+- **浏览器无法直接播放 RTSP**，必须由后端流媒体服务器（如 ZLMediaKit）转码为 HTTP-FLV 或 WebRTC
+- 16 宫格需后端下发**子码流（480P）**，单路放大时切主码流（1080P）
+- 👉 **问后端**："RTSP 转好的 FLV/WebRTC 拉流地址怎么给我？"
+
+### 2. 告警推送方式（阻塞 M2）
+
+- 已初步确认使用 **SSE**（单向、自动重连、轻量）
+- 👉 **提醒后端**：Nginx 需关闭 `proxy_buffering`，否则消息会被缓存
+
+### 3. 工作流编排复杂度（阻塞 M3）
+
+- 表单配置 → 工作量可控
+- 可视化拖拽连线 → 需引入 X6 / LogicFlow，至少 1 个月
+- 👉 **问产品**："出原型图，明确是哪种方案"
+
+---
+
+## 五、项目文件结构
+
+```
+src/views/
+├── home/          ✅ 首页（保留）
+├── login/         ✅ 登录（保留）
+├── system/        ✅ 系统管理（保留）
+├── dashboard/     ✅ 数据可视化（保留）
+├── dataScreen/    ✅ 数据大屏（保留）
+├── proTable/      ✅ ProTable 组件示例（保留，开发参考）
+├── monitor/       🆕 视频与监控模块（M1）
+├── point/         🆕 点位与通道管理（M1）
+├── alarm/         🆕 告警与处置模块（M2）
+├── workflow/      🆕 工作流编排占位（M3）
+└── (ai-assistant) 🧠 预留智库悬浮窗入口（基于 RAGFlow 定制版，按需以 iframe 接入）
 ```
 
-- **Install：**
+---
 
-```text
+## 六、下一步行动建议
+
+1. **Mock 数据先行，不等后端**：通过本地 Mock JSON 数据，先行完成 `point/index.vue`（点位管理）的界面和 ProTable 交互开发，边做边等后端接口文档
+2. **确认视频协议**：问后端推流格式（FLV / WebRTC），拿到一个测试用拉流 URL
+3. **选定视频播放器**：拿到协议后，在 `monitor/index.vue` 中集成 Jessibuca 或 mpegts.js
+4. **搭建多宫格布局**：用 CSS Grid 画出 4/9/16 宫格的占位框架
+5. **对接点位接口**：Mock 开发完成后，无缝切换为真实后端 API
+
+---
+
+## 七、安装与运行
+
+```bash
+# 安装依赖
 pnpm install
-```
 
-- **Run：**
-
-```text
+# 启动开发服务器
 pnpm dev
-pnpm serve
-```
 
-- **Build：**
-
-```text
-# 开发环境
-pnpm build:dev
-
-# 测试环境
-pnpm build:test
-
-# 生产环境
+# 构建生产版本
 pnpm build:pro
 ```
 
-- **Lint：**
+---
 
-```text
-# eslint 检测代码
-pnpm lint:eslint
+## 八、代码仓库
 
-# prettier 格式化代码
-pnpm lint:prettier
-
-# stylelint 格式化样式
-pnpm lint:stylelint
-```
-
-- **commit：**
-
-```text
-# 提交代码（提交前会自动执行 lint:lint-staged 命令）
-pnpm commit
-```
-
-### 项目截图 📷
-
-- 登录页：
-
-![login_light](https://i.imgtg.com/2023/04/13/8tknp.png)
-
-![login_dark](https://i.imgtg.com/2023/04/13/8tmpP.png)
-
-- 首页：
-
-![home_light](https://i.imgtg.com/2023/04/13/8tl1j.png)
-
-![home_dark](https://i.imgtg.com/2023/04/13/8tpfb.png)
-
-- 表格页：
-
-![table_light](https://i.imgtg.com/2023/04/13/8tfMx.png)
-
-![table_dark](https://i.imgtg.com/2023/04/13/8tv8F.png)
-
-- 数据可视化
-
-![dashboard](https://i.imgtg.com/2023/04/14/82Grx.png)
-
-- 数据大屏：
-
-![dataScreen](https://i.imgtg.com/2023/01/16/QP8HF.png)
-
-### 文件资源目录 📚
-
-```text
-Geeker-Admin
-├─ .husky                  # husky 配置文件
-├─ .vscode                 # VSCode 推荐配置
-├─ build                   # Vite 配置项
-├─ public                  # 静态资源文件（该文件夹不会被打包）
-├─ src
-│  ├─ api                  # API 接口管理
-│  ├─ assets               # 静态资源文件
-│  ├─ components           # 全局组件
-│  ├─ config               # 全局配置项
-│  ├─ directives           # 全局指令文件
-│  ├─ enums                # 项目常用枚举
-│  ├─ hooks                # 常用 Hooks 封装
-│  ├─ languages            # 语言国际化 i18n
-│  ├─ layouts              # 框架布局模块
-│  ├─ routers              # 路由管理
-│  ├─ stores               # pinia store
-│  ├─ styles               # 全局样式文件
-│  ├─ typings              # 全局 ts 声明
-│  ├─ utils                # 常用工具库
-│  ├─ views                # 项目所有页面
-│  ├─ App.vue              # 项目主组件
-│  ├─ main.ts              # 项目入口文件
-│  └─ vite-env.d.ts        # 指定 ts 识别 vue
-├─ .editorconfig           # 统一不同编辑器的编码风格
-├─ .env                    # vite 常用配置
-├─ .env.development        # 开发环境配置
-├─ .env.production         # 生产环境配置
-├─ .env.test               # 测试环境配置
-├─ .eslintignore           # 忽略 Eslint 校验
-├─ .eslintrc.cjs           # Eslint 校验配置文件
-├─ .gitignore              # 忽略 git 提交
-├─ .prettierignore         # 忽略 Prettier 格式化
-├─ .prettierrc.cjs         # Prettier 格式化配置
-├─ .stylelintignore        # 忽略 stylelint 格式化
-├─ .stylelintrc.cjs        # stylelint 样式格式化配置
-├─ CHANGELOG.md            # 项目更新日志
-├─ commitlint.config.cjs   # git 提交规范配置
-├─ index.html              # 入口 html
-├─ LICENSE                 # 开源协议文件
-├─ lint-staged.config.cjs  # lint-staged 配置文件
-├─ package-lock.json       # 依赖包包版本锁
-├─ package.json            # 依赖包管理
-├─ postcss.config.cjs      # postcss 配置
-├─ README.md               # README 介绍
-├─ tsconfig.json           # typescript 全局配置
-└─ vite.config.ts          # vite 全局配置文件
-```
-
-### 浏览器支持 🌎
-
-- 本地开发推荐使用 Chrome 最新版浏览器 [Download](https://www.google.com/intl/zh-CN/chrome/)。
-- 生产环境支持现代浏览器，不再支持 IE 浏览器，更多浏览器可以查看 [Can I Use Es Module](https://caniuse.com/?search=ESModule)。
-
-| ![IE](https://i.imgtg.com/2023/04/11/8z7ot.png) | ![Edge](https://i.imgtg.com/2023/04/11/8zr3p.png) | ![Firefox](https://i.imgtg.com/2023/04/11/8zKiU.png) | ![Chrome](https://i.imgtg.com/2023/04/11/8zNrx.png) | ![Safari](https://i.imgtg.com/2023/04/11/8zeGj.png) |
-| :---------------------------------------------: | :-----------------------------------------------: | :--------------------------------------------------: | :-------------------------------------------------: | :-------------------------------------------------: |
-|                   not support                   |                  last 2 versions                  |                   last 2 versions                    |                   last 2 versions                   |                   last 2 versions                   |
-
-### 项目后台接口 🧩
-
-项目后台接口完全采用 Mock 数据，感谢以下 Mock 平台支持：
-
-- FastMock： https://www.fastmock.site
-- EasyMock：https://mock.mengxuegu.com
-
-### 微信交流群 👨‍👨‍👦‍👦
-
-微信一群、二群、三群、四群已满，加作者微信进入五群（支持知识付费）🤪
-
-|                                               微信二维码                                                |
-| :-----------------------------------------------------------------------------------------------------: |
-| <img src="https://pic.ziyuan.wang/user/guest/2024/02/WX20240228-162952@2x_d164375fc0c16.png" width=170> |
-
-### 捐赠 🍵
-
-如果你正在使用这个项目或者喜欢这个项目的，可以通过以下方式支持我：
-
-- Star、Fork、Watch 一键三连 🚀
-- 通过微信、支付宝一次性捐款 ❤
-
-|                                        微信                                        |                                       支付宝                                       |
-| :--------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: |
-| <img src="https://i.imgtg.com/2023/01/16/QRzBX.png" alt="Alipay QRcode" width=170> | <img src="https://i.imgtg.com/2023/01/16/QRFZt.png" alt="Wechat QRcode" width=170> |
+- GitHub：https://github.com/1716001473/Police

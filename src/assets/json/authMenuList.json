@@ -16,6 +16,20 @@
       }
     },
     {
+      "path": "/monitor",
+      "name": "monitor",
+      "component": "/monitor/index",
+      "meta": {
+        "icon": "VideoCamera",
+        "title": "视频与监控",
+        "isLink": "",
+        "isHide": false,
+        "isFull": false,
+        "isAffix": false,
+        "isKeepAlive": true
+      }
+    },
+    {
       "path": "/system",
       "name": "system",
       "redirect": "/system/accountManage",

@@ -45,7 +45,10 @@
             :class="{ 'active-box': activeIndex === index }"
             @click="activeIndex = index"
           >
-            <div class="placeholder-text">
+            <!-- 有视频流地址时：渲染真实播放器 -->
+            <JessibucaPlayer v-if="streamMap[index]" :videoUrl="streamMap[index]" />
+            <!-- 无视频流时：显示等待推流占位符 -->
+            <div v-else class="placeholder-text">
               <el-icon size="24" class="mb-2"><VideoCamera /></el-icon>
               <span>通道 {{ index }} (等待推流...)</span>
             </div>
@@ -58,8 +61,9 @@
 </template>
 
 <script setup lang="ts" name="monitor">
-import { ref, watch } from "vue";
+import { ref, reactive, watch } from "vue";
 import { VideoCamera } from "@element-plus/icons-vue";
+import JessibucaPlayer from "./components/JessibucaPlayer.vue";
 
 // --- 左侧树形数据逻辑 ---
 const filterText = ref("");
@@ -71,7 +75,7 @@ const cameraData = ref([
     id: 1,
     label: "东大门区域",
     children: [
-      { id: 11, label: "东大门进出口抓拍", status: "online", stream: "url_1" },
+      { id: 11, label: "东大门进出口抓拍", status: "online", stream: "https://liteavapp.qcloud.com/live/liteavdemoplayerstreamid.flv" },
       { id: 12, label: "东大门人脸识别", status: "offline", stream: "url_2" }
     ]
   },
@@ -96,11 +100,15 @@ const filterNode = (value: string, data: any) => {
   return data.label.includes(value);
 };
 
-// 点击摄像头节点
+// 每个宫格窗口绑定的视频流地址 { 1: 'url...', 2: 'url...', ... }
+const streamMap = reactive<Record<number, string>>({});
+
+// 点击摄像头节点 —— 将流地址推送到当前选中的宫格窗口
 const handleNodeClick = (data: any) => {
-  if (!data.children) {
-    console.log(`准备将摄像头 [${data.label}] 的流播放到第 ${activeIndex.value} 个窗口`, data.stream);
-    // 这里未来写对接播放器的逻辑
+  if (!data.children && data.stream) {
+    // 把这个摄像头的流地址，绑到当前焦点窗口上
+    streamMap[activeIndex.value] = data.stream;
+    console.log(`摄像头 [${data.label}] 的流已推送到第 ${activeIndex.value} 个窗口`);
   }
 };
 

@@ -30,6 +30,20 @@
       }
     },
     {
+      "path": "/point",
+      "name": "point",
+      "component": "/point/index",
+      "meta": {
+        "icon": "Location",
+        "title": "点位与通道管理",
+        "isLink": "",
+        "isHide": false,
+        "isFull": false,
+        "isAffix": false,
+        "isKeepAlive": true
+      }
+    },
+    {
       "path": "/system",
       "name": "system",
       "redirect": "/system/accountManage",

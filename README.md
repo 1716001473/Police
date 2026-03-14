@@ -50,13 +50,13 @@
 | ------------------------- | ------------------- | ----------------------------------------------- |
 | 登录/退出/会话管理        | ✅ 框架自带         | —                                               |
 | 角色权限控制              | ✅ 框架自带         | —                                               |
-| 点位（视频流）列表 + 筛选 | 🔲 `views/point/`   | `GET /api/streams`                              |
-| 点位在线/离线状态刷新     | 🔲 状态标签映射     | `GET /api/streams`（status 字段）               |
-| 新增 / 编辑 / 删除点位    | 🔲 弹窗表单         | `POST` / `PATCH` / `DELETE /api/streams/{id}`   |
-| 手动立即检查              | 🔲 按钮             | `POST /api/streams/{id}/check`                  |
-| 单路视频播放              | 🔲 `views/monitor/` | `GET /api/streams/{id}/preview`（返回播放地址） |
-| 多宫格视频（4/9/16）      | 🔲 CSS Grid 布局    | 子码流 / 主码流切换                             |
-| 视频切换 / 全屏 / 静音    | 🔲 播放器封装       | —                                               |
+| 点位（视频流）列表 + 筛选 | ✅ `views/point/`   | `GET /api/streams`                              |
+| 点位在线/离线状态刷新     | ✅ 状态标签映射     | `GET /api/streams`（status 字段）               |
+| 新增 / 编辑 / 删除点位    | ✅ 弹窗表单         | `POST` / `PATCH` / `DELETE /api/streams/{id}`   |
+| 手动立即检查              | ✅ 按钮             | `POST /api/streams/{id}/check`                  |
+| 单路视频播放              | ✅ `views/monitor/` | `GET /api/streams/{id}/preview`（返回播放地址） |
+| 多宫格视频（4/9/16）      | ✅ CSS Grid 布局    | 子码流 / 主码流切换                             |
+| 视频切换 / 全屏 / 静音    | ✅ 播放器封装       | —                                               |
 | 时间轴回放                | 🔲                  | 需后端提供录像时间片段列表                      |
 
 #### 后端视频流状态机（已确认）
